@@ -1,56 +1,176 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import BackgroundCircles from "./BackgroundCircles";
 import Link from "next/link";
 import { PageInfo } from "../typings";
 import { urlFor } from "../sanity";
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 type Props = {
   pageInfo: PageInfo;
 };
 
 export default function Hero({ pageInfo }: Props) {
-  const [text, count] = useTypewriter({
-    words: [`Hi, My name is ${pageInfo?.name}`, "<Jesrel />"],
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  const [text] = useTypewriter({
+    words: [
+      `Hi, I'm ${pageInfo?.name}`,
+      "I Create Digital Experiences",
+      "< Innovation Through Code />",
+      "Let's Build Something Amazing",
+    ],
     loop: true,
     delaySpeed: 2000,
   });
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [controls, isInView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        bounce: 0.4,
+      },
+    },
+  };
+
   return (
-    <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
+    <div className="h-screen flex flex-col items-center justify-center overflow-hidden relative">
       <BackgroundCircles />
-      <div className="h-32 w-32">
-        <motion.img
-          drag
-          dragConstraints={{left: -300, right: 300, top: -300, bottom: 300}}
-          src={urlFor(pageInfo?.heroImage).url()}
-          className="relative rounded-full h-32 w-32 mx-auto object-cover"
-          alt=""
-        />
-      </div>
-      <div className="z-20">
-        <h2 className="text-gray-500 text-sm uppercase font-semibold pb-2 tracking-[15px]">
-          {pageInfo?.role}
-        </h2>
-        <h1 className="text-5xl lg:text-6xl font-semibold scroll-px-10">
-          <span className="mr-3">{text}</span>
-          <Cursor cursorColor="red" cursorStyle="|" />
-        </h1>
-        <div className="pt-5">
-          <Link href="#about">
-            <button className="heroButton">About</button>
-          </Link>
-          <Link href="#experience">
-            <button className="heroButton">Experience</button>
-          </Link>
-          <Link href="#skills">
-            <button className="heroButton">Skills</button>
-          </Link>
-          <Link href="#projects">
-            <button className="heroButton">Projects</button>
-          </Link>
-        </div>
-      </div>
+
+      <motion.div
+        ref={ref}
+        variants={containerVariants}
+        initial="hidden"
+        animate={controls}
+        className="relative z-20 flex flex-col items-center px-4"
+      >
+        {/* Animated Profile Section */}
+        <motion.div
+          variants={itemVariants}
+          className="relative group perspective-1000"
+        >
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary-mint via-primary-blue to-primary-purple rounded-lg blur-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-gradient-xy"></div>
+          <motion.div
+            className="relative hexagon-container"
+            whileHover={{ rotateY: 180 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="hexagon-front">
+              <motion.img
+                drag
+                dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
+                dragElastic={0.1}
+                src={urlFor(pageInfo?.heroImage).url()}
+                className="w-40 h-40 object-cover"
+                alt="Profile"
+              />
+            </div>
+            <div className="hexagon-back">
+              <div className="flex flex-col items-center justify-center h-full text-primary-mint p-4">
+                <p className="text-sm font-medium text-center">
+                  {pageInfo?.backgroundInformation?.slice(0, 100)}...
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Dynamic Text Content */}
+        <motion.div variants={itemVariants} className="mt-8 text-center">
+          <motion.h2
+            className="text-sm uppercase text-primary-mint/80 pb-2 tracking-[15px] font-light"
+            whileHover={{ letterSpacing: "20px" }}
+            transition={{ duration: 0.3 }}
+          >
+            {pageInfo?.role}
+          </motion.h2>
+          <h1 className="text-4xl lg:text-6xl font-bold px-10">
+            <span className="mr-3 bg-gradient-to-r from-primary-mint via-primary-blue to-primary-purple text-transparent bg-clip-text bg-300% animate-gradient">
+              {text}
+            </span>
+            <Cursor cursorColor="#8BE8CB" />
+          </h1>
+        </motion.div>
+
+        {/* Interactive CTA Section */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3"
+        >
+          {[
+            { href: "#about", text: "About", icon: "👋" },
+            { href: "#experience", text: "Experience", icon: "💼" },
+            { href: "#skills", text: "Skills", icon: "⚡" },
+            { href: "#projects", text: "Projects", icon: "🚀" },
+          ].map((item) => (
+            <Link href={item.href} key={item.text}>
+              <motion.button
+                className="w-full heroButton group relative overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-mint to-primary-blue opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
+                <span className="relative flex items-center justify-center gap-2">
+                  <span className="hidden md:inline">{item.icon}</span>
+                  {item.text}
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary-mint to-primary-blue transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </motion.button>
+            </Link>
+          ))}
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          variants={itemVariants}
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        >
+          <motion.div
+            animate={{
+              y: [0, 10, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+            className="w-6 h-10 rounded-full border-2 border-primary-mint p-1"
+          >
+            <motion.div
+              animate={{
+                y: [0, 16, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="w-2 h-2 bg-primary-mint rounded-full mx-auto"
+            />
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
