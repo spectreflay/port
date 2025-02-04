@@ -22,7 +22,7 @@ export default function BackgroundCircles() {
       <div className="absolute w-[500px] h-[500px] animate-pulse delay-150">
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-purple/10 to-primary-mauve/10 blur-lg transform rotate-90"></div>
       </div>
-      
+
       {/* Decorative elements */}
       <div className="absolute w-full h-full">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary-mint rounded-full animate-ping"></div>

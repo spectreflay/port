@@ -56,14 +56,12 @@ export default function Hero({ pageInfo }: Props) {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center overflow-hidden relative">
-      <BackgroundCircles />
-
       <motion.div
         ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="relative z-20 flex flex-col items-center px-4"
+        className="relative z-20 flex flex-col items-center px-4 space-y-12 mt-24"
       >
         {/* Animated Profile Section */}
         <motion.div
@@ -78,11 +76,10 @@ export default function Hero({ pageInfo }: Props) {
           >
             <div className="hexagon-front">
               <motion.img
-                drag
                 dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
                 dragElastic={0.1}
                 src={urlFor(pageInfo?.heroImage).url()}
-                className="w-40 h-40 object-cover"
+                className="w-full h-full object-cover"
                 alt="Profile"
               />
             </div>
@@ -97,26 +94,26 @@ export default function Hero({ pageInfo }: Props) {
         </motion.div>
 
         {/* Dynamic Text Content */}
-        <motion.div variants={itemVariants} className="mt-8 text-center">
+        <motion.div variants={itemVariants} className="mt-8 text-center space-y-6">
           <motion.h2
-            className="text-sm uppercase text-primary-mint/80 pb-2 tracking-[15px] font-light"
+            className="text-lg uppercase text-[#B4F4E3] tracking-[15px] font-semibold drop-shadow-[0_0_12px_rgba(139,232,203,0.5)]"
             whileHover={{ letterSpacing: "20px" }}
             transition={{ duration: 0.3 }}
           >
             {pageInfo?.role}
           </motion.h2>
-          <h1 className="text-4xl lg:text-6xl font-bold px-10">
-            <span className="mr-3 bg-gradient-to-r from-primary-mint via-primary-blue to-primary-purple text-transparent bg-clip-text bg-300% animate-gradient">
+          <h1 className="text-5xl lg:text-7xl font-bold px-10">
+            <span className="mr-3 bg-gradient-to-r from-[#B4F4E3] via-[#8BE8CB] to-[#7EA2AA] text-transparent bg-clip-text bg-300% animate-gradient drop-shadow-[0_0_15px_rgba(139,232,203,0.6)]">
               {text}
             </span>
-            <Cursor cursorColor="#8BE8CB" />
+            <Cursor cursorColor="#B4F4E3" />
           </h1>
         </motion.div>
 
         {/* Interactive CTA Section */}
         <motion.div
           variants={itemVariants}
-          className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
             { href: "#about", text: "About", icon: "👋" },
@@ -126,49 +123,19 @@ export default function Hero({ pageInfo }: Props) {
           ].map((item) => (
             <Link href={item.href} key={item.text}>
               <motion.button
-                className="w-full heroButton group relative overflow-hidden"
+                className="heroButton group relative overflow-hidden bg-[#303633]/40 backdrop-blur-sm"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-mint to-primary-blue opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#B4F4E3] to-[#7EA2AA] opacity-0 group-hover:opacity-30 transition-opacity duration-300"></span>
                 <span className="relative flex items-center justify-center gap-2">
                   <span className="hidden md:inline">{item.icon}</span>
                   {item.text}
                 </span>
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary-mint to-primary-blue transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#B4F4E3] to-[#7EA2AA] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </motion.button>
             </Link>
           ))}
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          variants={itemVariants}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{
-              y: [0, 10, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            className="w-6 h-10 rounded-full border-2 border-primary-mint p-1"
-          >
-            <motion.div
-              animate={{
-                y: [0, 16, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="w-2 h-2 bg-primary-mint rounded-full mx-auto"
-            />
-          </motion.div>
         </motion.div>
       </motion.div>
     </div>
