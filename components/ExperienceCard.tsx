@@ -1,60 +1,88 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { urlFor } from "../sanity";
-import { Experience } from "../typings";
+import { motion } from "framer-motion"
+import { urlFor } from "../sanity"
+import type { Experience } from "../typings"
+import { Calendar, LinkIcon } from "lucide-react"
 
 type Props = {
-  experience: Experience;
-};
+  experience: Experience
+}
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="flex flex-col gap-3 rounded-lg items-center space-y-7 flex-shrink-0 w-[380px] sm:w-[500px] md:w-[600px] xl:w-[900px] text-small snap-center bg-[#29292929] p-10 opacity-40 hover:opacity-100 cursor-pointer transition-opacity duration-200 overflow-y-scroll mt-24 scrollbar-thin scrollbar-track-slate-400/80 scrollbar-thumb-[#FB2576]/80 scrollbar-thumb-rounded-full md:overflow-y-hidden">
-      <motion.img
-        initial={{
-          y: -100,
-          opacity: 0,
-        }}
+    <motion.article
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative flex flex-col rounded-2xl items-center flex-shrink-0 w-[380px] sm:w-[500px] md:w-[600px] xl:w-[900px] snap-center bg-gradient-to-b from-primary-dark/95 to-primary-dark/80 p-8 backdrop-blur-sm border border-primary-mint/10 group"
+    >
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-2xl">
+        <div className="absolute top-0 left-0 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-primary-mint/50 to-transparent" />
+        <div className="absolute top-0 right-0 w-[1px] h-1/2 bg-gradient-to-b from-primary-mint/50 to-transparent" />
+        <div className="absolute bottom-0 right-0 w-1/2 h-[1px] bg-gradient-to-l from-transparent via-primary-mint/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-[1px] h-1/2 bg-gradient-to-t from-primary-mint/50 to-transparent" />
+      </div>
+
+      {/* Company Logo */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        src={urlFor(experience?.companyImage).url()}
-        alt=""
-        className="w-24 h-24 shrink-0 rounded-full sm:w-28 sm:h-28 xl:w-[200px] xl:h-[200px] object-cover object-center xl:mt-0"
-      />
-      <div className="px-0 md:px-10">
-        <h4 className="text-2xl text-center md:text-4xl font-light ">
-          {experience.jobTitle}
-        </h4>
-        <p className="font-bold text-center text-sm mt-1">
-          {experience.company}
-        </p>
-        <div className="flex space-x-2 my-2 justify-center">
-          {/* {Tech used} */}
+        className="relative z-10"
+      >
+        <div className="relative group-hover:scale-110 transition-transform duration-300">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint to-primary-blue rounded-full blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
+          <img
+            src={urlFor(experience?.companyImage).url() || "/placeholder.svg"}
+            alt={experience?.company}
+            className="relative w-24 h-24 rounded-full xl:w-[140px] xl:h-[140px] object-cover object-center bg-primary-dark p-1"
+          />
+        </div>
+      </motion.div>
+
+      {/* Content */}
+      <div className="px-0 md:px-10 w-full mt-8 relative z-10">
+        {/* Title and Company */}
+        <div className="text-center space-y-2">
+          <h4 className="text-2xl md:text-4xl font-bold text-primary-mint">{experience.jobTitle}</h4>
+          <p className="text-xl text-primary-blue font-medium">{experience.company}</p>
+        </div>
+
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-3 my-6 justify-center">
           {experience.technologies.map((technology) => (
-            <img
-              key={technology._id}
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-white"
-              src={urlFor(technology.image).url()}
-              alt=""
-            />
+            <div key={technology._id} className="relative group/tech">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint/50 to-primary-blue/50 rounded-full blur opacity-0 group-hover/tech:opacity-100 transition duration-300"></div>
+              <img
+                className="relative w-10 h-10 rounded-full bg-primary-dark p-1 transition-transform duration-300 group-hover/tech:scale-110"
+                src={urlFor(technology.image).url() || "/placeholder.svg"}
+                alt={technology.title || "Technology"}
+              />
+            </div>
           ))}
         </div>
-        <p className="uppercase py-5 text-gray-300 text-xs">
-          {new Date(experience.dateStarted).toDateString()} --{" "}
-          {experience.isCurrentlyWorkingHere
-            ? "Present"
-            : new Date(experience.dateEnded).toDateString()}
-        </p>
 
-        <ul className="list-disc space-y-4 ml-5 md:text-lg text-sx leading-4">
+        {/* Date */}
+        <div className="flex items-center justify-center gap-2 text-primary-mint/70 text-sm mb-6">
+          <Calendar className="w-4 h-4" />
+          <span>
+            {new Date(experience.dateStarted).toDateString()} -{" "}
+            {experience.isCurrentlyWorkingHere ? "Present" : new Date(experience.dateEnded).toDateString()}
+          </span>
+        </div>
+
+        {/* Points */}
+        <ul className="space-y-4 ml-5 text-sm md:text-base max-h-96 overflow-y-auto scrollbar-thin scrollbar-track-primary-dark/20 scrollbar-thumb-primary-mint/50 pr-5">
           {experience.points.map((point, i) => (
-            <li className="flex-center text-[#76ab03]" key={i}>
-              {point}
+            <li key={i} className="text-primary-mint/90 list-none flex items-start gap-3 group/point">
+              <LinkIcon className="w-5 h-5 mt-1 flex-shrink-0 text-primary-mint/50 group-hover/point:text-primary-mint transition-colors duration-300" />
+              <span className="group-hover/point:text-primary-mint transition-colors duration-300">{point}</span>
             </li>
           ))}
         </ul>
       </div>
-    </article>
-  );
+    </motion.article>
+  )
 }
+
