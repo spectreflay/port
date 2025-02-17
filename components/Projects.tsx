@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import { urlFor } from "../sanity"
 import type { Project } from "../typings"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
 
 type Props = {
   projects: Project[]
@@ -181,9 +181,35 @@ function Projects({ projects }: Props) {
                     ))}
                   </div>
                   {position === 0 && (
-                    <p className="text-sm sm:text-base md:text-lg text-center text-primary-mint/80">
-                      {project?.summary}
-                    </p>
+                    <>
+                      <p className="text-sm sm:text-base md:text-lg text-center text-primary-mint/80 mb-6">
+                        {project?.summary}
+                      </p>
+                      {project?.linkToBuild && (
+                        <div className="flex justify-center">
+                          <a
+                            href={project.linkToBuild}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center gap-2 px-6 py-3 bg-primary-dark/60 
+                                     text-primary-mint border border-primary-mint/30 rounded-lg overflow-hidden
+                                     transition-all duration-300 hover:border-primary-mint/60"
+                          >
+                            {/* Animated background gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary-mint/20 via-primary-blue/20 to-primary-mint/20 
+                                          translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                            
+                            {/* Link content */}
+                            <span className="relative font-medium">View Project</span>
+                            <ExternalLink className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            
+                            {/* Bottom border animation */}
+                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-mint/60 to-primary-blue/60 
+                                          scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                          </a>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </motion.div>
@@ -223,4 +249,3 @@ function Projects({ projects }: Props) {
 }
 
 export default Projects
-
