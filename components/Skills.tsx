@@ -46,12 +46,7 @@ function Skills({ skills }: Props) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 justify-center mx-auto items-center py-20"
-    >
+    <div className="min-h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 justify-center mx-auto items-center py-20">
       {/* Background Animation */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/50 to-transparent" />
@@ -64,43 +59,18 @@ function Skills({ skills }: Props) {
 
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mt-32">
         {/* Skills Grid */}
-        <motion.div
+        <div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.05,
-              },
-            },
-          }}
         >
           {getCurrentPageSkills().map((skill, index) => (
-            <motion.div
+            <div
               key={skill._id}
-              variants={{
-                hidden: { 
-                  scale: 0.8,
-                  opacity: 0,
-                },
-                visible: {
-                  scale: 1,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.3,
-                    delay: index * 0.05
-                  },
-                },
-              }}
               className="transform hover:scale-105 transition-transform duration-300"
             >
               <Skill skill={skill} directionLeft={index < itemsPerPage / 2} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Navigation Controls */}
         {totalPages > 1 && (
@@ -140,7 +110,7 @@ function Skills({ skills }: Props) {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   )
 }
 

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { urlFor } from "../sanity";
 import { Skill } from "../typings";
+import { useEffect, useState } from "react";
 
 type Props = {
   skill: Skill;
@@ -8,6 +9,16 @@ type Props = {
 };
 
 function Skill({ skill, directionLeft }: Props) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null; // Return null on server-side and first client render
+  }
+
   return (
     <div className="group relative flex cursor-pointer">
       <motion.div
