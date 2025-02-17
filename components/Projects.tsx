@@ -203,7 +203,7 @@ function Projects({ projects }: Props) {
       </div>
 
       {projects.length > 1 && (
-        <div className="absolute bottom-10 flex space-x-2">
+        <div className="absolute bottom-24 flex space-x-2">
           {projects.map((_, index) => (
             <button
               key={index}
