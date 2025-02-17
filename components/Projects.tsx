@@ -109,7 +109,7 @@ function Projects({ projects }: Props) {
         </svg>
       </div>
 
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">Projects</h3>
+      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">Projects</h3>
 
       <div className="relative w-full flex justify-center items-center">
         {projects.length > 1 && (

@@ -67,6 +67,11 @@ body {
   text-align: center;
 }
 
+/* New Hexagonal Clip Path */
+.clip-hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
 @keyframes float {
   0%,
   100% {
@@ -119,4 +124,3 @@ body {
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 232, 203, 0.8);
 }
-
