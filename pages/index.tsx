@@ -1,5 +1,5 @@
 import type { GetStaticProps } from "next";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Header from "../components/header";
 import Head from "next/head";
 import Hero from "../components/hero";
@@ -25,8 +25,30 @@ type Props = {
 };
 
 const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
+  const [useSnapScroll, setUseSnapScroll] = useState(true);
+
+  useEffect(() => {
+    const checkHeight = () => {
+      setUseSnapScroll(window.innerHeight > 750);
+    };
+
+    // Initial check
+    checkHeight();
+
+    // Add resize listener
+    window.addEventListener("resize", checkHeight);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkHeight);
+  }, []);
+
   return (
-    <div className="gradient-bg text-primary-mint h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-primary-dark/20 scrollbar-thumb-primary-mint/50 hover:scrollbar-thumb-primary-mint/80 scrollbar-thumb-rounded-full">
+    <div
+      className={`gradient-bg text-primary-mint h-screen overflow-y-scroll overflow-x-hidden z-0 
+                     scrollbar scrollbar-track-primary-dark/20 scrollbar-thumb-primary-mint/50 
+                     hover:scrollbar-thumb-primary-mint/80 scrollbar-thumb-rounded-full
+                     ${useSnapScroll ? "snap-container" : ""}`}
+    >
       <Head>
         <title>
           {pageInfo?.name ? `${pageInfo.name} - Portfolio` : "Portfolio"}
@@ -34,27 +56,27 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
       </Head>
       <Header socials={socials} />
 
-      <section id="hero" className="snap-start">
+      <section id="hero" className={useSnapScroll ? "snap-start" : ""}>
         <Hero pageInfo={pageInfo} />
       </section>
 
-      <section id="about" className="snap-center">
+      <section id="about" className={useSnapScroll ? "snap-center" : ""}>
         <About pageInfo={pageInfo} />
       </section>
 
-      <section id="experience" className="snap-center">
+      <section id="experience" className={useSnapScroll ? "snap-center" : ""}>
         <WorkExperience experiences={experiences} />
       </section>
 
-      <section id="skills" className="snap-start">
+      <section id="skills" className={useSnapScroll ? "snap-start" : ""}>
         <Skills skills={skills} />
       </section>
 
-      <section id="projects" className="snap-start">
+      <section id="projects" className={useSnapScroll ? "snap-start" : ""}>
         <Projects projects={projects} />
       </section>
 
-      <section id="contact" className="snap-start">
+      <section id="contact" className={useSnapScroll ? "snap-start" : ""}>
         <ContactMe />
       </section>
 
@@ -82,7 +104,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: {
-      pageInfo: Array.isArray(pageInfoArray) ? pageInfoArray[0] : pageInfoArray, // Ensure it's an object
+      pageInfo: Array.isArray(pageInfoArray) ? pageInfoArray[0] : pageInfoArray,
       experiences,
       skills,
       projects,

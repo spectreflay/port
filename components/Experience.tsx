@@ -132,7 +132,7 @@ function Experience({ experiences }: Props) {
         </svg>
       </div>
 
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-primary-mint text-2xl font-bold z-30">
+      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold z-30">
         Experience
       </h3>
 

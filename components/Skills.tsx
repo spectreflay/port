@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Skill from "./Skill"
 import type { Skill as SkillType } from "../typings"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -9,18 +9,27 @@ type Props = {
 }
 
 function Skills({ skills }: Props) {
-  // Responsive items per page
-  const getItemsPerPage = () => {
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth < 640) return 6 // mobile
-      if (window.innerWidth < 1024) return 9 // tablet
-      return 12 // desktop
+  const [itemsPerPage, setItemsPerPage] = useState(12) // Default to desktop value
+  const [currentPage, setCurrentPage] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+    const handleResize = () => {
+      if (window.innerWidth < 640) setItemsPerPage(6) // mobile
+      else if (window.innerWidth < 1024) setItemsPerPage(9) // tablet
+      else setItemsPerPage(12) // desktop
     }
-    return 12 // default
+
+    handleResize() // Set initial value
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  if (!isMounted) {
+    return null // Return null on server-side and first client render
   }
 
-  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage())
-  const [currentPage, setCurrentPage] = useState(0)
   const totalPages = Math.ceil(skills.length / itemsPerPage)
 
   const getCurrentPageSkills = () => {
@@ -38,13 +47,6 @@ function Skills({ skills }: Props) {
 
   const pageIndicators = Array.from({ length: totalPages }, (_, i) => i)
 
-  // Update items per page on window resize
-  if (typeof window !== 'undefined') {
-    window.addEventListener('resize', () => {
-      setItemsPerPage(getItemsPerPage())
-    })
-  }
-
   return (
     <div className="min-h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 justify-center mx-auto items-center py-20">
       {/* Background Animation */}
@@ -53,7 +55,7 @@ function Skills({ skills }: Props) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(139,232,203,0.1),transparent_50%)]" />
       </div>
 
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">
+      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">
         Tech Stack
       </h3>
 

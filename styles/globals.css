@@ -21,6 +21,24 @@
   }
 }
 
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrolling for Snap Container */
+.snap-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  transition: scroll-snap-type 0.3s ease;
+}
+
+.snap-container section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
 body {
   @apply bg-primary-dark text-primary-mint;
   background-image: radial-gradient(circle at 20% 20%, rgba(139, 232, 203, 0.15) 0%, transparent 35%),
@@ -34,11 +52,31 @@ body {
 }
 
 .hexagon-container {
-  width: 300px;
-  height: 300px;
   position: relative;
   overflow: hidden;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Responsive hexagon sizes */
+@media (min-width: 768px) {
+  .hexagon-container {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hexagon-container {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hexagon-container {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .hexagon-inner {

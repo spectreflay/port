@@ -96,18 +96,18 @@ export default function About({ pageInfo }: Props) {
         </svg>
       </div>
 
-      <h3 className="absolute top-24 sm:top-36 uppercase tracking-[20px] text-primary-mint text-xl sm:text-2xl font-bold">About</h3>
+      <h3 className="absolute top-36 sm:top-36 uppercase tracking-[20px] text-primary-mint text-xl sm:text-2xl font-bold">About</h3>
 
       <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 mt-32 sm:mt-20 md:mt-0 w-full max-w-6xl">
         <motion.div
           initial={{ x: -200, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.2 }}
-          className="flex-shrink-0 w-56 h-56 sm:w-64 sm:h-64 md:w-[350px] md:h-[350px]"
+          className="flex-shrink-0 md:w-[350px] md:h-[350px]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="hexagon-container w-full h-full">
+          <div className="hexagon-container mx-auto">
             <motion.div
               className="hexagon-inner"
               animate={{ rotateY: isHovered ? 180 : 0 }}
