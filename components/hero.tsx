@@ -43,10 +43,10 @@ export default function Hero({ pageInfo }: Props) {
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
       transition: {
         type: "spring",
         bounce: 0.4,
@@ -58,9 +58,9 @@ export default function Hero({ pageInfo }: Props) {
     <div className="h-screen flex flex-col items-center justify-center overflow-hidden relative">
       <motion.div
         ref={ref}
-        variants={containerVariants}
         initial="hidden"
         animate={controls}
+        variants={containerVariants}
         className="relative z-20 flex flex-col items-center px-4 space-y-12 mt-24"
       >
         {/* Animated Profile Section */}

@@ -49,7 +49,7 @@ function Skills({ skills }: Props) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
+      transition={{ duration: 0.5 }}
       className="min-h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 justify-center mx-auto items-center py-20"
     >
       {/* Background Animation */}
@@ -73,7 +73,7 @@ function Skills({ skills }: Props) {
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.05,
               },
             },
           }}
@@ -83,18 +83,15 @@ function Skills({ skills }: Props) {
               key={skill._id}
               variants={{
                 hidden: { 
-                  scale: 0,
+                  scale: 0.8,
                   opacity: 0,
-                  y: 20
                 },
                 visible: {
                   scale: 1,
                   opacity: 1,
-                  y: 0,
                   transition: {
-                    type: "spring",
-                    stiffness: 100,
-                    delay: index * 0.1
+                    duration: 0.3,
+                    delay: index * 0.05
                   },
                 },
               }}
