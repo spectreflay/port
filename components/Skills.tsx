@@ -9,13 +9,23 @@ type Props = {
 }
 
 function Skills({ skills }: Props) {
-  const ITEMS_PER_PAGE = 12
+  // Responsive items per page
+  const getItemsPerPage = () => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 640) return 6 // mobile
+      if (window.innerWidth < 1024) return 9 // tablet
+      return 12 // desktop
+    }
+    return 12 // default
+  }
+
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage())
   const [currentPage, setCurrentPage] = useState(0)
-  const totalPages = Math.ceil(skills.length / ITEMS_PER_PAGE)
+  const totalPages = Math.ceil(skills.length / itemsPerPage)
 
   const getCurrentPageSkills = () => {
-    const start = currentPage * ITEMS_PER_PAGE
-    return skills.slice(start, start + ITEMS_PER_PAGE)
+    const start = currentPage * itemsPerPage
+    return skills.slice(start, start + itemsPerPage)
   }
 
   const nextPage = () => {
@@ -28,73 +38,34 @@ function Skills({ skills }: Props) {
 
   const pageIndicators = Array.from({ length: totalPages }, (_, i) => i)
 
+  // Update items per page on window resize
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', () => {
+      setItemsPerPage(getItemsPerPage())
+    })
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
-      className="h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 min-h-screen justify-center mx-auto items-center"
+      className="min-h-screen flex relative flex-col text-center md:text-left max-w-[2000px] xl:px-10 justify-center mx-auto items-center py-20"
     >
-      {/* Background Shapes */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <svg className="absolute w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="skills-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(139, 232, 203, 0.1)" />
-              <stop offset="100%" stopColor="rgba(126, 162, 170, 0.1)" />
-            </linearGradient>
-          </defs>
-
-          <motion.path
-            d="M100,0 Q80,0 80,20 Q100,20 100,0 Z"
-            fill="url(#skills-gradient)"
-            animate={{
-              d: [
-                "M100,0 Q80,0 80,20 Q100,20 100,0 Z",
-                "M100,0 Q75,5 80,25 Q105,20 100,0 Z",
-                "M100,0 Q80,0 80,20 Q100,20 100,0 Z",
-              ],
-            }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: "reverse", duration: 10, ease: "easeInOut" }}
-          />
-
-          <motion.path
-            d="M0,100 Q20,100 20,80 Q0,80 0,100 Z"
-            fill="url(#skills-gradient)"
-            animate={{
-              d: [
-                "M0,100 Q20,100 20,80 Q0,80 0,100 Z",
-                "M0,100 Q25,95 20,75 Q-5,80 0,100 Z",
-                "M0,100 Q20,100 20,80 Q0,80 0,100 Z",
-              ],
-            }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: "reverse", duration: 12, ease: "easeInOut" }}
-          />
-
-          <motion.circle
-            cx="50"
-            cy="50"
-            r="8"
-            fill="url(#skills-gradient)"
-            animate={{
-              r: [8, 12, 8],
-              cx: [50, 48, 50],
-              cy: [50, 52, 50],
-            }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: "reverse", duration: 8, ease: "easeInOut" }}
-          />
-        </svg>
+      {/* Background Animation */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/50 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(139,232,203,0.1),transparent_50%)]" />
       </div>
 
-      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">Tech Stack</h3>
-      {/* <h3 className="absolute top-36 uppercase tracking-[3px] text-primary-mint/70 text-sm">
-        Hover over a skill for current proficiency
-      </h3> */}
+      <h3 className="absolute top-24 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">
+        Tech Stack
+      </h3>
 
-      <div className="w-full max-w-6xl px-20 mt-32 relative">
-        {/* Skills Grid with Hexagonal Layout */}
+      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mt-32">
+        {/* Skills Grid */}
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 relative"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
           initial="hidden"
           animate="visible"
           variants={{
@@ -111,28 +82,39 @@ function Skills({ skills }: Props) {
             <motion.div
               key={skill._id}
               variants={{
-                hidden: { scale: 0, opacity: 0 },
+                hidden: { 
+                  scale: 0,
+                  opacity: 0,
+                  y: 20
+                },
                 visible: {
                   scale: 1,
                   opacity: 1,
-                  transition: { type: "spring", stiffness: 100 },
+                  y: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    delay: index * 0.1
+                  },
                 },
               }}
-              className={`transform mx-auto ${index % 2 === 0 ? "translate-y-2" : ""}`}
+              className="transform hover:scale-105 transition-transform duration-300"
             >
-              <Skill skill={skill} directionLeft={index < ITEMS_PER_PAGE / 2} />
+              <Skill skill={skill} directionLeft={index < itemsPerPage / 2} />
             </motion.div>
           ))}
         </motion.div>
 
         {/* Navigation Controls */}
         {totalPages > 1 && (
-          <div className="absolute -bottom-20 left-0 right-0 flex justify-center items-center gap-4">
+          <div className="mt-12 flex justify-center items-center gap-4">
             <button
               onClick={prevPage}
-              className="p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark group"
+              className="p-2 sm:p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 
+                       backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark 
+                       disabled:opacity-50 disabled:cursor-not-allowed group"
             >
-              <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-1" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:-translate-x-1" />
             </button>
 
             {/* Page Indicators */}
@@ -142,7 +124,9 @@ function Skills({ skills }: Props) {
                   key={pageIndex}
                   onClick={() => setCurrentPage(pageIndex)}
                   className={`h-2 transition-all duration-300 rounded-full ${
-                    currentPage === pageIndex ? "w-6 bg-primary-mint" : "w-2 bg-primary-mint/30 hover:bg-primary-mint/50"
+                    currentPage === pageIndex
+                      ? "w-6 bg-primary-mint"
+                      : "w-2 bg-primary-mint/30 hover:bg-primary-mint/50"
                   }`}
                 />
               ))}
@@ -150,9 +134,11 @@ function Skills({ skills }: Props) {
 
             <button
               onClick={nextPage}
-              className="p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark group"
+              className="p-2 sm:p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 
+                       backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark 
+                       disabled:opacity-50 disabled:cursor-not-allowed group"
             >
-              <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
         )}
