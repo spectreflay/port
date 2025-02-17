@@ -34,8 +34,6 @@ body {
 }
 
 .hexagon-container {
-  width: 300px;
-  height: 300px;
   position: relative;
   overflow: hidden;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -123,4 +121,12 @@ body {
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 232, 203, 0.8);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  .hexagon-container {
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
 }

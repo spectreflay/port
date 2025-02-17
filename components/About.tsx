@@ -44,7 +44,7 @@ export default function About({ pageInfo }: Props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
-      className="flex flex-col relative min-h-screen text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center"
+      className="flex flex-col relative min-h-screen text-center md:text-left md:flex-row max-w-7xl px-4 sm:px-8 md:px-10 justify-evenly mx-auto items-center"
     >
       {/* Background Shapes */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -96,18 +96,18 @@ export default function About({ pageInfo }: Props) {
         </svg>
       </div>
 
-      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">About</h3>
+      <h3 className="absolute top-24 sm:top-36 uppercase tracking-[20px] text-primary-mint text-xl sm:text-2xl font-bold">About</h3>
 
-      <div className="flex flex-col md:flex-row items-center gap-10 mt-20 md:mt-0">
+      <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 mt-32 sm:mt-20 md:mt-0 w-full max-w-6xl">
         <motion.div
           initial={{ x: -200, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.2 }}
-          className="flex-shrink-0"
+          className="flex-shrink-0 w-56 h-56 sm:w-64 sm:h-64 md:w-[350px] md:h-[350px]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="hexagon-container">
+          <div className="hexagon-container w-full h-full">
             <motion.div
               className="hexagon-inner"
               animate={{ rotateY: isHovered ? 180 : 0 }}
@@ -122,8 +122,8 @@ export default function About({ pageInfo }: Props) {
               </div>
               <div className="hexagon-back">
                 <div className="flex flex-col items-center justify-center h-full text-primary-mint p-4">
-                  <h4 className="text-xl font-bold mb-2">{pageInfo?.name}</h4>
-                  <p className="text-sm text-center">{pageInfo?.role}</p>
+                  <h4 className="text-lg sm:text-xl font-bold mb-2">{pageInfo?.name}</h4>
+                  <p className="text-xs sm:text-sm text-center">{pageInfo?.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -134,17 +134,17 @@ export default function About({ pageInfo }: Props) {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-6 max-w-2xl"
+          className="space-y-6 w-full px-4 sm:px-6 md:px-0"
         >
-          <h4 className="text-3xl md:text-4xl font-bold text-primary-mint">
+          <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-mint">
             Here's a <span className="underline decoration-primary-blue/50">little</span> about me
           </h4>
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
+          <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-4">
             {sections.map((section) => (
               <motion.button
                 key={section.title}
                 onClick={() => setActiveSection(section.title)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm ${
+                className={`flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm ${
                   activeSection === section.title
                     ? "bg-primary-mint text-primary-dark"
                     : "bg-primary-dark/40 text-primary-mint"
@@ -152,7 +152,7 @@ export default function About({ pageInfo }: Props) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <section.icon className="w-4 h-4" />
+                <section.icon className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>{section.title}</span>
               </motion.button>
             ))}
@@ -163,7 +163,7 @@ export default function About({ pageInfo }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="text-base md:text-lg text-primary-mint/80 glass-card p-6 rounded-lg min-h-[150px] relative overflow-hidden"
+            className="text-sm sm:text-base md:text-lg text-primary-mint/80 glass-card p-4 sm:p-6 rounded-lg min-h-[150px] relative overflow-hidden"
           >
             {sections.find((s) => s.title === activeSection)?.content}
             <motion.div
@@ -179,4 +179,3 @@ export default function About({ pageInfo }: Props) {
     </motion.div>
   )
 }
-
