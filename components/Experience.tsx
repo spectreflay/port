@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { Experience } from "../typings";
 import { ChevronLeft, ChevronRight, Calendar, Building2 } from "lucide-react";
 import { urlFor } from "../sanity";
+import Image from "next/image";
 
 type Props = {
   experiences: Experience[];
@@ -132,11 +133,11 @@ function Experience({ experiences }: Props) {
         </svg>
       </div>
 
-      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold z-30">
+      <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">
         Experience
       </h3>
 
-      <div className="w-full max-w-6xl mt-20">
+      <div className="w-full max-w-6xl mt-32">
         <div className="relative h-[400px] sm:h-[450px] flex items-center justify-center">
           <AnimatePresence initial={false} mode="popLayout">
             {getVisibleExperiences().map(({ experience, position }) => (
@@ -213,12 +214,14 @@ function Experience({ experiences }: Props) {
                     {experience?.technologies.map((technology) => (
                       <div key={technology._id} className="relative group/tech">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint/50 to-primary-blue/50 rounded-full blur opacity-0 group-hover/tech:opacity-100 transition duration-300"></div>
-                        <img
+                        <Image
                           className="relative w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary-dark p-1 transition-transform duration-300 group-hover/tech:scale-110"
                           src={
                             urlFor(technology.image).url() || "/placeholder.svg"
                           }
                           alt={technology.title}
+                          width={24}
+                          height={24}
                         />
                       </div>
                     ))}

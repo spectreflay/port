@@ -85,10 +85,10 @@ function ContactMe() {
             <div className="glass-card p-8 rounded-xl space-y-8">
               <div className="space-y-4">
                 <h4 className="text-3xl md:text-4xl font-bold text-primary-mint">
-                  Let's Connect
+                  Let&apos;s Connect
                 </h4>
                 <p className="text-primary-mint/80 text-lg">
-                  Feel free to reach out. I'm always open to discussing new
+                  Feel free to reach out. I&apos;m always open to discussing new
                   projects and opportunities.
                 </p>
               </div>

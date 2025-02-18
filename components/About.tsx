@@ -5,6 +5,7 @@ import { useState } from "react"
 import type { PageInfo } from "../typings"
 import { urlFor } from "../sanity"
 import { GraduationCap, Briefcase, Code, Palette, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 type Props = {
   pageInfo: PageInfo
@@ -114,10 +115,12 @@ export default function About({ pageInfo }: Props) {
               transition={{ duration: 0.6 }}
             >
               <div className="hexagon-front">
-                <img
+                <Image
                   src={urlFor(pageInfo?.profilePic).url() || "/placeholder.svg"}
                   alt={pageInfo?.name}
                   className="object-cover w-full h-full"
+                  width={500}
+                  height={500}
                 />
               </div>
               <div className="hexagon-back">
@@ -137,7 +140,7 @@ export default function About({ pageInfo }: Props) {
           className="space-y-6 w-full px-4 sm:px-6 md:px-0"
         >
           <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-mint">
-            Here's a <span className="underline decoration-primary-blue/50">little</span> about me
+            Here&apos;s a <span className="underline decoration-primary-blue/50">little</span> about me
           </h4>
           <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-4">
             {sections.map((section) => (

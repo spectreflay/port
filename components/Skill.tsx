@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { urlFor } from "../sanity";
 import { Skill } from "../typings";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Props = {
   skill: Skill;
@@ -41,11 +42,13 @@ function Skill({ skill, directionLeft }: Props) {
 
         {/* Skill Image */}
         <div className="relative w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 transition-all duration-300">
-          <img
+          <Image
             src={urlFor(skill?.image).url() || "/placeholder.svg"}
             alt={skill.title}
             className="object-contain w-full h-full p-2 transition-all duration-300 
                      group-hover:blur-sm group-hover:scale-110 rounded-xl"
+            width={500}
+            height={500}
           />
           {/* Hover Overlay with Title */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

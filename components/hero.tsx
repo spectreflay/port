@@ -61,7 +61,7 @@ export default function Hero({ pageInfo }: Props) {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="relative z-20 flex flex-col items-center px-4 space-y-12 mt-24"
+        className="relative flex flex-col items-center px-4 space-y-12 mt-24"
       >
         {/* Animated Profile Section */}
         <motion.div

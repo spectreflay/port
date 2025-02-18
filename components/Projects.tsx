@@ -5,6 +5,7 @@ import { useState } from "react"
 import { urlFor } from "../sanity"
 import type { Project } from "../typings"
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
+import Image from "next/image"
 
 type Props = {
   projects: Project[]
@@ -172,10 +173,12 @@ function Projects({ projects }: Props) {
                     {project?.technologies.map((technology) => (
                       <div key={technology._id} className="relative group/tech">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint/50 to-primary-blue/50 rounded-full blur opacity-0 group-hover/tech:opacity-100 transition duration-300"></div>
-                        <img
+                        <Image
                           className="relative w-10 h-10 rounded-full bg-primary-dark p-1 transition-transform duration-300 group-hover/tech:scale-110"
                           src={urlFor(technology.image).url() || "/placeholder.svg"}
                           alt={technology.title}
+                          width={40}
+                          height={40}
                         />
                       </div>
                     ))}

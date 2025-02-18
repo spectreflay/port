@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { urlFor } from "../sanity"
 import type { Experience } from "../typings"
 import { Calendar, LinkIcon } from "lucide-react"
+import Image from "next/image"
 
 type Props = {
   experience: Experience
@@ -33,10 +34,12 @@ export default function ExperienceCard({ experience }: Props) {
       >
         <div className="relative group-hover:scale-110 transition-transform duration-300">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint to-primary-blue rounded-full blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
-          <img
+          <Image
             src={urlFor(experience?.companyImage).url() || "/placeholder.svg"}
             alt={experience?.company}
             className="relative w-24 h-24 rounded-full xl:w-[140px] xl:h-[140px] object-cover object-center bg-primary-dark p-1"
+            width={96}
+            height={96}
           />
         </div>
       </motion.div>
@@ -54,10 +57,12 @@ export default function ExperienceCard({ experience }: Props) {
           {experience.technologies.map((technology) => (
             <div key={technology._id} className="relative group/tech">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-mint/50 to-primary-blue/50 rounded-full blur opacity-0 group-hover/tech:opacity-100 transition duration-300"></div>
-              <img
+              <Image
                 className="relative w-10 h-10 rounded-full bg-primary-dark p-1 transition-transform duration-300 group-hover/tech:scale-110"
                 src={urlFor(technology.image).url() || "/placeholder.svg"}
                 alt={technology.title || "Technology"}
+                width={40}
+                height={40}
               />
             </div>
           ))}
