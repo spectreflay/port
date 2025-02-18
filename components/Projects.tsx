@@ -112,18 +112,20 @@ function Projects({ projects }: Props) {
 
       <h3 className="absolute top-36 uppercase tracking-[20px] text-primary-mint text-2xl font-bold">Projects</h3>
 
-      <div className="relative w-full flex justify-center items-center">
+      <div className="relative w-full flex justify-center items-start mt-32 sm:mt-20">
         {projects.length > 1 && (
           <button
             onClick={prevProject}
-            className="absolute left-10 z-30 p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute left-2 sm:left-10 z-30 p-2 sm:p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 
+                     backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark 
+                     disabled:opacity-50 disabled:cursor-not-allowed top-1/2 -translate-y-1/2"
             disabled={projects.length <= 1}
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
         )}
 
-        <div className="relative w-full max-w-7xl h-[600px] flex items-center justify-center">
+        <div className="relative w-full max-w-7xl h-[600px] flex items-start justify-center px-8 sm:px-16">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             {getVisibleProjects().map(({ project, position }) => (
               <motion.div
@@ -153,7 +155,7 @@ function Projects({ projects }: Props) {
                 className={`absolute w-full max-w-2xl ${position === 0 ? "z-20" : "z-10"}`}
               >
                 <div
-                  className={`glass-card p-8 rounded-xl mx-4 ${position === 0 ? "ring-2 ring-primary-mint/20" : ""}`}
+                  className={`glass-card mt-20 p-8 rounded-xl mx-4 ${position === 0 ? "ring-2 ring-primary-mint/20" : ""}`}
                 >
                   <motion.img
                     initial={{ y: -100, opacity: 0 }}
@@ -198,15 +200,10 @@ function Projects({ projects }: Props) {
                                      text-primary-mint border border-primary-mint/30 rounded-lg overflow-hidden
                                      transition-all duration-300 hover:border-primary-mint/60"
                           >
-                            {/* Animated background gradient */}
                             <div className="absolute inset-0 bg-gradient-to-r from-primary-mint/20 via-primary-blue/20 to-primary-mint/20 
                                           translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                            
-                            {/* Link content */}
                             <span className="relative font-medium">View Project</span>
                             <ExternalLink className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            
-                            {/* Bottom border animation */}
                             <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-mint/60 to-primary-blue/60 
                                           scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                           </a>
@@ -223,10 +220,12 @@ function Projects({ projects }: Props) {
         {projects.length > 1 && (
           <button
             onClick={nextProject}
-            className="absolute right-10 z-30 p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute right-2 sm:right-10 z-30 p-2 sm:p-3 rounded-full bg-primary-dark/80 text-primary-mint border border-primary-mint/20 
+                     backdrop-blur-sm transition-all duration-300 hover:bg-primary-mint hover:text-primary-dark 
+                     disabled:opacity-50 disabled:cursor-not-allowed top-1/2 -translate-y-1/2"
             disabled={projects.length <= 1}
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
         )}
       </div>

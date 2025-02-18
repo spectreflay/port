@@ -78,35 +78,35 @@ function ContactMe() {
         Contact
       </motion.h3>
 
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <div className="w-full max-w-7xl mx-auto mt-32 sm:mt-0">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Side - Contact Info */}
-          <div className="space-y-12">
-            <div className="glass-card p-8 rounded-xl space-y-8">
+          <div className="space-y-8">
+            <div className="glass-card p-6 sm:p-8 rounded-xl space-y-6 sm:space-y-8">
               <div className="space-y-4">
-                <h4 className="text-3xl md:text-4xl font-bold text-primary-mint">
+                <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-mint">
                   Let&apos;s Connect
                 </h4>
-                <p className="text-primary-mint/80 text-lg">
+                <p className="text-primary-mint/80 text-base sm:text-lg">
                   Feel free to reach out. I&apos;m always open to discussing new
                   projects and opportunities.
                 </p>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {contactInfo.map((info, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-6 group"
+                    className="flex items-center space-x-4 sm:space-x-6 group"
                   >
-                    <div className="bg-primary-dark/60 p-4 rounded-lg">
-                      <info.icon className="text-primary-mint h-6 w-6" />
+                    <div className="bg-primary-dark/60 p-3 sm:p-4 rounded-lg">
+                      <info.icon className="text-primary-mint h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
                     <div>
                       <p className="text-primary-mint/60 text-sm">
                         {info.label}
                       </p>
-                      <p className="text-primary-mint text-lg font-medium">
+                      <p className="text-primary-mint text-base sm:text-lg font-medium break-all">
                         {info.value}
                       </p>
                     </div>
@@ -124,9 +124,9 @@ function ContactMe() {
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="glass-card p-8 rounded-xl space-y-6"
+              className="glass-card p-6 sm:p-8 rounded-xl space-y-4 sm:space-y-6"
             >
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label
                     htmlFor="name"
@@ -139,14 +139,14 @@ function ContactMe() {
                     <input
                       id="name"
                       {...register("name", { required: "Name is required" })}
-                      className="relative w-full bg-primary-dark/60 rounded-lg px-4 py-3 text-primary-mint placeholder-primary-mint/50
+                      className="relative w-full bg-primary-dark/60 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-primary-mint placeholder-primary-mint/50
                                border border-primary-mint/20 focus:border-primary-mint/60 focus:ring-2 focus:ring-primary-mint/20
-                               transition-all duration-300"
+                               transition-all duration-300 text-sm sm:text-base"
                       placeholder="John Doe"
                     />
                   </div>
                   {errors.name && (
-                    <p className="text-red-400 text-sm mt-1">
+                    <p className="text-red-400 text-xs sm:text-sm mt-1">
                       {errors.name.message}
                     </p>
                   )}
@@ -170,14 +170,14 @@ function ContactMe() {
                           message: "Invalid email address",
                         },
                       })}
-                      className="relative w-full bg-primary-dark/60 rounded-lg px-4 py-3 text-primary-mint placeholder-primary-mint/50
+                      className="relative w-full bg-primary-dark/60 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-primary-mint placeholder-primary-mint/50
                                border border-primary-mint/20 focus:border-primary-mint/60 focus:ring-2 focus:ring-primary-mint/20
-                               transition-all duration-300"
+                               transition-all duration-300 text-sm sm:text-base"
                       placeholder="john@example.com"
                     />
                   </div>
                   {errors.email && (
-                    <p className="text-red-400 text-sm mt-1">
+                    <p className="text-red-400 text-xs sm:text-sm mt-1">
                       {errors.email.message}
                     </p>
                   )}
@@ -198,14 +198,14 @@ function ContactMe() {
                     {...register("subject", {
                       required: "Subject is required",
                     })}
-                    className="relative w-full bg-primary-dark/60 rounded-lg px-4 py-3 text-primary-mint placeholder-primary-mint/50
+                    className="relative w-full bg-primary-dark/60 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-primary-mint placeholder-primary-mint/50
                              border border-primary-mint/20 focus:border-primary-mint/60 focus:ring-2 focus:ring-primary-mint/20
-                             transition-all duration-300"
+                             transition-all duration-300 text-sm sm:text-base"
                     placeholder="How can I help you?"
                   />
                 </div>
                 {errors.subject && (
-                  <p className="text-red-400 text-sm mt-1">
+                  <p className="text-red-400 text-xs sm:text-sm mt-1">
                     {errors.subject.message}
                   </p>
                 )}
@@ -225,15 +225,15 @@ function ContactMe() {
                     {...register("message", {
                       required: "Message is required",
                     })}
-                    rows={6}
-                    className="relative w-full bg-primary-dark/60 rounded-lg px-4 py-3 text-primary-mint placeholder-primary-mint/50
+                    rows={4}
+                    className="relative w-full bg-primary-dark/60 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-primary-mint placeholder-primary-mint/50
                              border border-primary-mint/20 focus:border-primary-mint/60 focus:ring-2 focus:ring-primary-mint/20
-                             transition-all duration-300 resize-none"
+                             transition-all duration-300 resize-none text-sm sm:text-base"
                     placeholder="Your message here..."
                   />
                 </div>
                 {errors.message && (
-                  <p className="text-red-400 text-sm mt-1">
+                  <p className="text-red-400 text-xs sm:text-sm mt-1">
                     {errors.message.message}
                   </p>
                 )}
@@ -242,13 +242,13 @@ function ContactMe() {
               <button
                 type="submit"
                 className="group relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-primary-mint to-primary-blue 
-                         px-8 py-4 text-primary-dark font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(139,232,203,0.4)]
-                         active:scale-[0.98]"
+                         px-6 sm:px-8 py-3 sm:py-4 text-primary-dark font-semibold text-sm sm:text-base transition-all duration-300 
+                         hover:shadow-[0_0_20px_rgba(139,232,203,0.4)] active:scale-[0.98]"
               >
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 <span className="flex items-center justify-center gap-2">
                   Send Message
-                  <Send className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Send className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </button>
             </form>
